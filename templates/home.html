@@ -2,5 +2,5 @@
 
 <!-- Borderless 5x5 table to contain contents? -->
 {% for b in books %}
-<p>{{ b }}</p>
+<p>{{ b['title'] }}, {{ b['author'] }}, ISBN-13: {{ b['isbn'] }}</p>
 {% endfor %}
