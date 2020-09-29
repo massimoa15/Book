@@ -1,4 +1,4 @@
-import os
+import os, tool
 from flask import Flask, render_template, flash, redirect, url_for, session, request
 
 import psycopg2, psycopg2.extras
@@ -19,13 +19,7 @@ def index():
 @app.route('/home', methods=['GET'])
 def home():
     # Method should query DB for a group of books (~25, 5 rows of 5?) and then pass the information to home.html
-    books = [{'title':'1984', 'author': 'George Orwell'},
-             {'title':'1985', 'author': 'George Orwell'},
-             {'title':'1986', 'author': 'George Orwell'},
-             {'title':'1987', 'author': 'George Orwell'},
-             {'title':'1988', 'author': 'George Orwell'},
-             {'title':'1989', 'author': 'George Orwell'},
-             {'title':'19810', 'author': 'George Orwell'}]
+    books = [tool.genbook() for i in range(25)]
     return render_template('home.html', books=books)
 
 
@@ -33,7 +27,7 @@ def home():
 @app.route('/book/<int:isbn>')
 def book(isbn):
     # Grab info for book based on isbn
-    b = {'title':'1984', 'author': 'George Orwell', 'isbn': isbn}
+    b = tool.genbook()
     return render_template('book.html', book=b)
 
 
