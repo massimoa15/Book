@@ -43,11 +43,11 @@ def search():
     # Result of search (present seperate space beneath the search space to display results, rather than redirect?)
     if request.method == 'POST':
         # Probably grab info from HTML form
-        pass
+        return render_template('search.html')
 
     # GET method, display search and search options
     else:
-        render_template('search.html')
+        return render_template('search.html')
 
 
 if __name__ == '__main__':
