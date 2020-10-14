@@ -16,19 +16,22 @@ def index():
 
 
 # Home page
-@app.route('/home', methods=['GET'])
+@app.route('/index')
 def home():
     # Method should query DB for a group of books (~25, 5 rows of 5?) and then pass the information to home.html
     books = [tool.genbook() for i in range(25)]
-    return render_template('home.html', books=books)
+
+    return render_template('index.html', books=books)
 
 
 # Page for specific book
-@app.route('/book/<int:isbn>')
+@app.route('/book/<string:isbn>')
 def book(isbn):
     # Grab info for book based on isbn
+
     b = tool.genbook()
-    return render_template('book.html', book=b)
+
+    return render_template('book.html', book=b, isbn=isbn)
 
 
 # DB search page

@@ -13,38 +13,26 @@
         <a href="index.html">
           <img src="newBook.png", alt="Book logo" width="100", height="100">
         </a>
-        <a href="search.html">click to search</a>
+        <a href="{{ url_for('search') }}">click to search</a>
         <hr>
         
       </div>
     </header>
 
-    <div> <!-- Table of books -->
-      <!-- Borderless 5x5 table to contain contents? -->
-      <!-- Jinja stuff
-      {% for b in books %}
-      <p>{{ b['title'] }}, {{ b['author'] }}, ISBN-13: {{ b['isbn'] }}</p>
-      {% endfor %}
-      -->
-
+    <div>
       <table class="center">
         <tr>
-          <td><a href="book.html"><img src="book.png", alt="Filler book 1", width="300", height="300"> </a><br> Filler Name 1 <br> $1.00 </td>
-          <td><a href="book.html"><img src="book.png", alt="Filler book 2", width="300", height="300"> </a><br> Filler Name 2 <br> $1.00 </td>
-          <td><a href="book.html"><img src="book.png", alt="Filler book 3", width="300", height="300"> </a><br> Filler Name 3 <br> $1.00 </td>
+        {% for b in books %}
+          <td><a href="{{ url_for('book', isbn=b['isbn']) }}"><img src="static/img/1559138382833.jpg", alt="Image of {{ b['title'] }}", width="300", height="300"> </a><br> {{ b['title'] }} <br> $1.00 </td>
+          {% if loop.index is divisibleby 3 or loop.last %}
+            </tr>
+            {% if not loop.last %}
+            <tr>
+            {% endif %}
+          {% endif %}
+        {% else %}
         </tr>
-        <br>
-        <tr>
-          <td><a href="book.html"><img src="book.png", alt="Filler book 1", width="300", height="300"> </a><br> Filler Name 1 <br> $1.00 </td>
-          <td><a href="book.html"><img src="book.png", alt="Filler book 2", width="300", height="300"> </a><br> Filler Name 2 <br> $1.00 </td>
-          <td><a href="book.html"><img src="book.png", alt="Filler book 3", width="300", height="300"> </a><br> Filler Name 3 <br> $1.00 </td>
-        </tr>
-        <br>
-        <tr>
-          <td><a href="book.html"><img src="book.png", alt="Filler book 1", width="300", height="300"> </a><br> Filler Name 1 <br> $1.00 </td>
-          <td><a href="book.html"><img src="book.png", alt="Filler book 2", width="300", height="300"> </a><br> Filler Name 2 <br> $1.00 </td>
-          <td><a href="book.html"><img src="book.png", alt="Filler book 3", width="300", height="300"> </a><br> Filler Name 3 <br> $1.00 </td>
-        </tr>
+        {% endfor %}
       </table>
     </div>
   </body>
