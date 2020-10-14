@@ -1,0 +1,6 @@
+<h1 style="text-align:center;"><marquee>HOME</marquee></h1>
+
+<!-- Borderless 5x5 table to contain contents? -->
+{% for b in books %}
+<p>{{ b['title'] }}, {{ b['author'] }}, ISBN-13: {{ b['isbn'] }}</p>
+{% endfor %}
