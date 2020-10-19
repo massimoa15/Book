@@ -7,7 +7,9 @@
 
 CREATE TABLE `Books` (
   `BCourseID` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `BTitle` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+  `BTitle` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `BAuthor` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `BIsbn` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --

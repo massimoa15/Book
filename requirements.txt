@@ -1,0 +1,4 @@
+Flask~=1.1.2
+names~=0.3.0
+coolname~=1.1.0
+mysql-connector-python
