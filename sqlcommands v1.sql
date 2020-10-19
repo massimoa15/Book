@@ -149,3 +149,35 @@ INSERT INTO `Courses` (`CId`, `CTitle`) VALUES
 ('STAT-4980', 'Experimental Designs'),
 ('STAT-4981', 'Sampling Theory');
 COMMIT;
+
+
+/* getting course titles through course ID(CourseIDtheUserSelected)
+ variable names are just made easier to understand, they can be changed to other names*/
+
+SELECT * FROM Courses WHERE CId = CourseIDtheUserSelected;
+
+
+/* deleting users if needed */
+
+DELETE FROM users WHERE user = UserNameNeedstobeDeleted;
+
+
+/* getting passwords from a specific user */
+
+SELECT pass FROM users WHERE user = UserNameNeedstobeChecked;
+
+
+/* checking whether the user is an admin, if needed */
+
+SELECT isadmin FROM users WHERE user = UserNameNeedstobeChecked;
+
+
+
+/* look up all uesers */
+
+SELECT * FROM users;
+
+
+/* changing/updating information for specific needs */
+
+UPDATE `TheNameoftheTable` SET `SomeValue`= TheValueNeedstobeChangedInto WHERE SomeItem = TheItemNeedstobeUpdated;
