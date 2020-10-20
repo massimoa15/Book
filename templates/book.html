@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,8 +14,6 @@ img {
 p {
   float: center
 }
-
-
 </style>
 --->
   </head>
@@ -29,7 +26,6 @@ p {
         </a>
         <a href="search.html">click to search</a>
         <hr>
-        
       </div>
     </header>
 
@@ -39,6 +35,18 @@ p {
     </div>
     <div style="display:inline-block;">
       <br><br><br><br><br>
+      <p>Title: {{ book['BTitle'] }}</p>
+      <p>Author: {{ book['BAuthor'] }}</p>
+      <p>ISBN-13: {{ book['BIsbn'] }} </p>
+      <p>Release Year:{{ book['Byear'] }} </p>
+      <p>Related Course: {{ book['BCourse'] }} </p>
+      </div>
+
+  </body>
+</html>
+
+ 
+=======
       <p>Title: Computer Networks</p>
       <p>Author: John Smith</p>
       <p>ISBN-13: blahblahblah </p>
