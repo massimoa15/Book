@@ -8,13 +8,13 @@ CREATE TABLE Courses (
 
 
 CREATE TABLE Books (
-  BNumber varchar(10) NOT NULL,
+  BISBN varchar(255) NOT NULL,
   BTitle varchar(255) NOT NULL,
   BAuthor varchar(255) NOT NULL,
-  BISBN varchar(255),
   BCourse varchar(10) NOT NULL,
   BPic varchar(255), /*a place holder for storing references to potentially more than one pictures*/
-  PRIMARY KEY (BNumber) /*Or BISBN*/
+  BNumber INT, /*BNumber represents the number of books, rather than some kind of identity*/
+  PRIMARY KEY (BISBN),
   FOREIGN KEY (BCourse) REFERENCES Courses(CourseID));
 
 
@@ -23,17 +23,17 @@ CREATE TABLE Users (
   UPassword varchar(255) NOT NULL,
   UBooks varchar(255),
   UOtherInfo varchar(255),
-  PRIMARY KEY (UserID),
-/*  FOREIGN KEY (UBooks) REFERENCES Books(BNumber)*/ /*this may not work if Users have posted more than one book, or user did not post any book*/
+  PRIMARY KEY (UserID)
+/*  FOREIGN KEY (UBooks) REFERENCES Books(BISBN)*/ /*this may not work if Users have posted more than one book, or user did not post any book*/
   );
 
 
 CREATE TABLE Postings (
   UserID varchar(20) NOT NULL,
   UBooks varchar(255) NOT NULL,
-  PostDates varchar(255) NOT NULL, /*used varchar rather than date data type because may contain more than one dates in each*/
-  PRIMARY KEY (UserID),
-  FOREIGN KEY (UBooks) REFERENCES Books(BNumber) /*this may not work if Users have posted more than one book*/
+  PostDates varchar(255) NOT NULL /*used varchar rather than date data type because may contain more than one dates in each*/
+  /*PRIMARY KEY (UserID)*/ /*might not be used as primary key if multiple rows are used*/
+  /*FOREIGN KEY (UBooks) REFERENCES Books(BISBN)*/ /*this may not work if Users have posted more than one book*/
   );
 
 COMMIT;
