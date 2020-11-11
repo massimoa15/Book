@@ -51,21 +51,21 @@ def book(isbn):
 # DB search page
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    query = "MATH-1730"
     # Result of search
-    if request.method == 'POST' or query:
+    if request.method == 'POST':
         cur = conn.cursor(dictionary=True)
 
         # Grab info from HTML form
         # method = request.form.get('method')
-        # query = request.form.get('query')
+        query = request.form.get('query')
+
+        print("QUERY GOT {}".format(query))
 
         cur.execute("select * from books where BCourseID = %s", [query])
         books = cur.fetchall()
 
         # Add random price
         for b in books:
-            print(b.keys())
             b['price'] = "$" + str(rm.randrange(600)) + "." + str(rm.randrange(100)).zfill(2)
 
         cur.close()
