@@ -79,8 +79,8 @@ def search():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
-        email = request.form["exampleInputEmail1"]
-        password = request.form["exampleInputPassword1"]
+        email = request.form["InputEmail"]
+        password = request.form["InputPassword"]
 
         if tool.userLogin(email, password, conn):
             return redirect(url_for('index'))
