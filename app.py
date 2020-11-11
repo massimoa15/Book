@@ -12,11 +12,11 @@ app = Flask(__name__)
 # Init redirect
 @app.route('/')
 def index():
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 
 # Home page
-@app.route('/index')
+@app.route('/home')
 def home():
     cur = conn.cursor(dictionary=True)
 
@@ -25,7 +25,7 @@ def home():
     books = cur.fetchall()
 
     cur.close()
-    return render_template('index.html', books=books)
+    return render_template('home.html', books=books)
 
 
 # Page for specific book
