@@ -65,14 +65,15 @@ def search():
 
         # Add random price
         for b in books:
+            print(b.keys())
             b['price'] = "$" + str(rm.randrange(600)) + "." + str(rm.randrange(100)).zfill(2)
 
         cur.close()
-        return render_template('search.html', books=books, numResults=len(books))
+        return render_template('search.html', books=books)
 
     # GET method, display search and search options
     else:
-        return render_template('search.html', numResults=0)
+        return render_template('search.html')
 
 
 # DB login page
