@@ -1,19 +1,16 @@
 {% extends "layout.html"%}
-<!DOCTYPE html>
-<html lang="en">
-	<head>
+{% block header %}
 		<title>Search Results Page</title>
-	</head>
-	<body>
-	{% block body %}
+{% endblock %}
+{% block body %}
 	<div class="row"> <!-- Contains the filter sidebar and the books found in the search -->
-		
+
 		<div class="col-sm-2">
 			<aside> <!-- Filter side bar -->
 				<h2>Filter settings:</h2>
 			</aside>
 		</div>
-		
+
 		<div class="col-sm-10">
 			<section> <!-- table of all books that are found in this search -->
 				<h4>#of Results</h4> <!-- TODO Replace with the number of results found -->
@@ -34,6 +31,4 @@
 			</section>
 		</div>
 	</div>
-	{% endblock %}
-	</body>
-</html>
+{% endblock %}
