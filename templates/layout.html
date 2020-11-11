@@ -15,7 +15,8 @@
   <body style="background-image: url('/static/assets/img/galaxy.png'); background-attachment: fixed; background-size: cover;">
 
   <!-- Includes navbar at top of page, 3 breaklines sperated -->
-  {% include 'includes/_navbar.html' %}
+  {#% include 'includes/_navbar.html' %#}
+
 
   <br>
   <br>
@@ -23,8 +24,9 @@
 
   <div class="container">
 
-    <!-- Space for messages to appear -->
-    {% include 'includes/_messages.html' %}
+    <!-- Space for messages to appear-->
+    {#% include 'includes/_messages.html' %#}
+
 
     <!-- Rest of file appears below -->
     {% block body %}{% endblock %}

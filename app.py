@@ -34,7 +34,7 @@ def book(isbn):
     cur = conn.cursor(dictionary=True)
 
     # Grab info for book based on isbn
-    cur.execute("select * from books where BIsbn = %s", [isbn])
+    cur.execute("select * from books where BISBN = %s", [isbn])
 
     # Try to fetch book info from DB
     b = cur.fetchone()
@@ -47,6 +47,7 @@ def book(isbn):
     else:
         return redirect(url_for('index'))
 
+
 # DB search page
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -56,9 +57,8 @@ def search():
         cur = conn.cursor(dictionary=True)
 
         # Grab info from HTML form
-        #method = request.form.get('method')
-        #query = request.form.get('query')
-
+        # method = request.form.get('method')
+        # query = request.form.get('query')
 
         cur.execute("select * from books where BCourseID = %s", [query])
         books = cur.fetchall()
@@ -72,7 +72,37 @@ def search():
 
     # GET method, display search and search options
     else:
-        return render_template('search.html', numResults = 0)
+        return render_template('search.html', numResults=0)
+
+
+# DB login page
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        email = request.form["exampleInputEmail1"]
+        password = request.form["exampleInputPassword1"]
+
+        if tool.userLogin(email, password, conn):
+            return redirect(url_for('index'))
+
+    return render_template("login.html")
+
+
+# DB signup page
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == "POST":
+        email = request.form["exampleInputEmail1"]
+        username = request.form["userName1"]
+        password = request.form["exampleInputPassword1"]
+        confirm_password = request.form["exampleInputPassword2"]
+
+        if password == confirm_password:
+            # attempting to create account, if account creation fails, returns False and reason is printed
+            if tool.register(username, password, email, conn):
+                return redirect(url_for('index'))
+
+    return render_template("signup.html")
 
 
 if __name__ == '__main__':
