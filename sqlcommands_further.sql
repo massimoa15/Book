@@ -7,7 +7,7 @@ VALUES ( 'UserID', 'UPassword', 'UBooks', 'UOtherInfo'); /*strings here are just
 
 /*Inserting new books*/
 INSERT INTO Books
-VALUES ( 'BNumber', 'BTitle', 'BAuthor', 'BISBN', 'BCourse', 'BPic');
+VALUES ( 'BISBN', 'BTitle', 'BAuthor', 'BCourse', 'BPic', 'BNumber');
 
 /*Inserting new postings*/
 INSERT INTO Postings
@@ -32,6 +32,11 @@ FROM Users
 WHERE UserID = 'UserNeedstobeChecked';
 
 
+/* getting book info*/
+SELECT *
+FROM Books
+WHERE BISBN = 'ISBNthatNeeded'; /*strings in commands might be replaced by string variables in reality*/
+
 
 /* look up all uesers */
 SELECT * /*can be changed to any other attributes for specific needs*/
@@ -40,5 +45,5 @@ FROM Users;
 
 /* changing/updating information for specific needs */
 UPDATE Users
-SET UBooks = 'NewBooks' /*a string of BNumber/BISBN in reality*/
+SET UBooks = 'NewBooks' /*a string of BISBN in reality*/
 WHERE UserID = 'TheUserthatUpdating';
