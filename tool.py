@@ -8,11 +8,8 @@ import constants
 import random as rm
 from coolname import generate
 
-ID = 0
-
 
 def genbook():
-    global ID
     '''
     Generates book information
     Title randomly generated from coolname
@@ -33,9 +30,9 @@ def genbook():
     isbn += str(digit)
     courseID = rm.choice(constants.courseIds)
 
-    ID += 1
+    BNumber = rm.randint(0, 200)
     # print(title,author, isbn)
-    return {'id': str(ID), 'title': title, 'author': author, 'isbn': isbn, 'courseID': courseID, 'BPic': None}
+    return {'id': BNumber, 'title': title, 'author': author, 'isbn': isbn, 'courseID': courseID, 'BPic': None}
 
 
 # DB setup
@@ -104,25 +101,24 @@ def userLogin(email, password, conn):
     cur = conn.cursor(dictionary=True)
 
     # getting the users infomation
-    u = getUser(email, conn)
+    u = getUser("UPassword", email, conn)
 
     if u is None:
         return False
 
     # verifying password is the stored one
-
     salt = u["UPassword"][:64]
 
     return u["UPassword"] == hash_password(password, salt.encode('ascii'))
 
 
 # given a username, their profile is retrieved
-def getUser(email, conn):
+def getUser(attribute, email, conn):
     # looking for user in DB
     cur = conn.cursor(dictionary=True)
 
     # Grab info for user based on email
-    cur.execute("select * from users where UEmail = %s", [email])
+    cur.execute(f"select {attribute} from users where UEmail = '{email}'")
 
     # Try to fetch user info from DB
     u = cur.fetchone()
@@ -130,8 +126,10 @@ def getUser(email, conn):
 
     # if we found a user return user dict
     if u:
-        # turning the list of books back into a list
-        u["UBooks"] = json.loads(u["UBooks"])
+        if "UBooks" in u:
+            # turning the list of books back into a list
+            u["UBooks"] = json.loads(u["UBooks"])
+            return u
         return u
 
     # if we didn't find user with said username, return None
@@ -196,7 +194,7 @@ def isAvailableEmail(email, conn):
     cur = conn.cursor(dictionary=True)
 
     # Grab info for user based on email
-    cur.execute("select * from users where UEmail = %s", [email])
+    cur.execute("select UserID from users where UEmail = %s", [email])
 
     # Try to fetch user info from DB
     u = cur.fetchone()
@@ -212,7 +210,7 @@ def isAvailableUsername(username, conn):
     cur = conn.cursor(dictionary=True)
 
     # Grab info for user based on email
-    cur.execute("select * from users where UserID = %s", [username])
+    cur.execute("select UserID from users where UserID = %s", [username])
 
     # Try to fetch user info from DB
     u = cur.fetchone()
@@ -225,7 +223,7 @@ def isUniversityEmail(email):
     """
     Checks if the person has a university of windsor email
     """
-    return email.endswith('@uwindsor.ca')
+    return email.lower().endswith('@uwindsor.ca')
 
 
 if __name__ == '__main__':

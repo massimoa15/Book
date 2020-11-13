@@ -57,11 +57,11 @@ def search():
 
         # Grab info from HTML form
         # method = request.form.get('method')
-        query = request.form.get('query')
+        query = request.form.get('query').strip()
 
         print("QUERY GOT {}".format(query))
 
-        cur.execute("select * from books where BCourseID = %s", [query])
+        cur.execute("select * from books where BCourse = %s", [query])
         books = cur.fetchall()
 
         # Add random price
@@ -84,8 +84,9 @@ def login():
         password = request.form["InputPassword"]
 
         if tool.userLogin(email, password, conn):
-            return redirect(url_for('index'))
-
+            return redirect(url_for('home'))
+        else:
+            print("incorrect password or email")
     return render_template("login.html")
 
 
@@ -101,7 +102,7 @@ def signup():
         if password == confirm_password:
             # attempting to create account, if account creation fails, returns False and reason is printed
             if tool.register(username, password, email, conn):
-                return redirect(url_for('index'))
+                return redirect(url_for('home'))
 
     return render_template("signup.html")
 
