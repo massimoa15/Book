@@ -4,7 +4,8 @@
 CREATE TABLE Courses (
   CourseID varchar(10) NOT NULL,
   CourseTitle varchar(255) NOT NULL,
-/*  'CourseBook' varchar(255) NOT NULL*/);
+/*  'CourseBook' varchar(255) NOT NULL*/
+  PRIMARY KEY (CourseID) /*Or BISBN*/);
 
 
 CREATE TABLE Books (
@@ -20,6 +21,7 @@ CREATE TABLE Books (
 
 CREATE TABLE Users (
   UserID varchar(20) NOT NULL,
+  UEmail varchar(30) NOT NULL,
   UPassword varchar(255) NOT NULL,
   UBooks varchar(255),
   UOtherInfo varchar(255),
@@ -40,13 +42,11 @@ COMMIT;
 
 
 /*These data do not containing book info, so might not be used yet*/
-/*
-INSERT INTO Courses ('CourseID', 'CourseTitle') VALUES
+INSERT INTO Courses VALUES
 ('COMP-1000', 'Key Concepts in Computer Science'),
 ('COMP-1400', 'Introduction to Algorithms and Programming I'),
 ('COMP-1410', 'Introduction to Algorithms and Programming II'),
 ('COMP-2120', 'Object-Oriented Programming Using Java'),
-('COMP-2140', 'Computer Languages, Grammars, and Translators'),
 ('COMP-2140', 'Computer Languages, Grammars, and Translators'),
 ('COMP-2310', 'Theoretical Foundations of Computer Science'),
 ('COMP-2540', 'Data Structures and Algorithms'),
@@ -86,7 +86,6 @@ INSERT INTO Courses ('CourseID', 'CourseTitle') VALUES
 ('COMP-4990', 'Project Management: Techniques and Tools'),
 ('MATH-1020', 'Mathematical Foundations'),
 ('MATH-1250', 'Linear Algebra I'),
-('MATH-1260', 'Vectors and Linear Algebra'),
 ('MATH-1260', 'Vectors and Linear Algebra'),
 ('MATH-1270', 'Linear Algebra (Engineering)'),
 ('MATH-1280', 'Access to Linear Algebra'),
