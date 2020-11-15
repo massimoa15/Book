@@ -12,11 +12,11 @@ app = Flask(__name__)
 # Init redirect
 @app.route('/')
 def index():
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 
 # Home page
-@app.route('/index')
+@app.route('/home')
 def home():
     cur = conn.cursor(dictionary=True)
 
@@ -25,7 +25,7 @@ def home():
     books = cur.fetchall()
 
     cur.close()
-    return render_template('index.html', books=books)
+    return render_template('home.html', books=books)
 
 
 # Page for specific book
@@ -34,7 +34,7 @@ def book(isbn):
     cur = conn.cursor(dictionary=True)
 
     # Grab info for book based on isbn
-    cur.execute("select * from books where BIsbn = %s", [isbn])
+    cur.execute("select * from books where BISBN = %s", [isbn])
 
     # Try to fetch book info from DB
     b = cur.fetchone()
@@ -47,20 +47,21 @@ def book(isbn):
     else:
         return redirect(url_for('index'))
 
+
 # DB search page
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    query = "MATH-1730"
     # Result of search
-    if request.method == 'POST' or query:
+    if request.method == 'POST':
         cur = conn.cursor(dictionary=True)
 
         # Grab info from HTML form
-        #method = request.form.get('method')
-        #query = request.form.get('query')
+        # method = request.form.get('method')
+        query = request.form.get('query').strip()
 
+        print("QUERY GOT {}".format(query))
 
-        cur.execute("select * from books where BCourseID = %s", [query])
+        cur.execute("select * from books where BCourse = %s", [query])
         books = cur.fetchall()
 
         # Add random price
@@ -68,11 +69,42 @@ def search():
             b['price'] = "$" + str(rm.randrange(600)) + "." + str(rm.randrange(100)).zfill(2)
 
         cur.close()
-        return render_template('search.html', books=books, numResults=len(books))
+        return render_template('search.html', books=books)
 
     # GET method, display search and search options
     else:
-        return render_template('search.html', numResults = 0)
+        return render_template('search.html')
+
+
+# DB login page
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == "POST":
+        email = request.form["InputEmail"]
+        password = request.form["InputPassword"]
+
+        if tool.userLogin(email, password, conn):
+            return redirect(url_for('home'))
+        else:
+            print("incorrect password or email")
+    return render_template("login.html")
+
+
+# DB signup page
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == "POST":
+        email = request.form["exampleInputEmail1"]
+        username = request.form["userName1"]
+        password = request.form["exampleInputPassword1"]
+        confirm_password = request.form["exampleInputPassword2"]
+
+        if password == confirm_password:
+            # attempting to create account, if account creation fails, returns False and reason is printed
+            if tool.register(username, password, email, conn):
+                return redirect(url_for('home'))
+
+    return render_template("signup.html")
 
 
 if __name__ == '__main__':
